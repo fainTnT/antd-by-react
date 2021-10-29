@@ -70,3 +70,8 @@
   border-top-left-radius: $raduis;
   border-bottom-left-radius: $raduis;
 }
+
+@mixin alert-style($background,$border){
+  background-color: $background;
+  border:1px solid $border;
+}

@@ -1,0 +1,87 @@
+.alert {
+  position: relative;
+  width: 400px;
+  min-height: 50px;
+  box-sizing: border-box;
+  background-color: $light;
+  border: 1px solid $gray-400;
+  border-radius: 5px;
+  padding:5px 10px;
+  display: flex;
+  animation: fadeIn 1s ease;
+  word-break: break-all;
+  &.alert-remove {
+    animation: fadeOut 1s ease;
+  }
+  .alert-message {
+    font-size: $font-size-lg;
+    margin-bottom:0;
+  }
+  .alert-description {
+    margin-bottom:0;
+    font-size: $font-size-base;
+  }
+  .alert-close {
+    position: absolute;
+    color:$gray-600;
+    top:5px;
+    right:10px;
+    cursor: pointer;
+  }
+  .alert-content {
+    margin-left:10px;
+  }
+  .success {
+    color:$success-border
+  }
+  .info {
+    color:$info-border
+  }
+  .danger {
+    color:$danger-border
+  }
+  .warning {
+    color:$warning-border
+  }
+  .font-sm {
+    font-size: $font-size-lg;
+  }
+  .font-lg {
+    font-size: $h3-font-size;
+  }
+}
+
+.alert-success {
+  @include alert-style($success-bg,$success-border)
+}
+.alert-info {
+  @include alert-style($info-bg,$info-border)
+}
+.alert-danger {
+  @include alert-style($danger-bg,$danger-border)
+}
+.alert-warning {
+  @include alert-style($warning-bg,$warning-border)
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+}
