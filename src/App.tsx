@@ -11,15 +11,17 @@ function App() {
       <Button btnType={ButtonType.Link} href='//www.baidu.com'  target='_blank'>baidu</Button>
       <Button btnType={ButtonType.Danger} autoFocus>Danger</Button>
       <h1>Alert</h1>
-      <Alert alertType={AlertType.Success} message='title'></Alert>
+      <Alert alertType={AlertType.Success} message='title' showIcon={true}></Alert>
       <br />
       <Alert alertType={AlertType.Info} message='title' description='infinfoinfoinfoinfoo'></Alert>
       <br />
       <Alert closable={true} alertType={AlertType.Danger} message='title' description='dangerdangerdangerdanger'></Alert>
       <br />
       <Alert 
+        onClick={()=>{console.log(1111)}}
         onClose={()=>{console.log('close alert')}}
         closable={true} 
+        showIcon={false}
         alertType={AlertType.Warning} 
         message='title' 
         description='warningwarningwarningwarning'

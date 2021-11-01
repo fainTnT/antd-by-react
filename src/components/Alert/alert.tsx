@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, DOMAttributes, DOMElement } from "react";
 import classnames from 'classnames'
 
 export enum AlertType {
@@ -14,51 +14,56 @@ interface iAlertProps {
   message?: string;
   description?: string;
   closable?: boolean;
+  showIcon?:boolean;
   onClose?: () => any
 }
 
-const Alert: React.FC<iAlertProps> = (props) => {
-  const [show, setShow] = useState(true)
-  const [fadeOut, setFadeOut] = useState(false)
-  const [font, setFont] = useState('')
+type NativeAlertProps = iAlertProps & React.HTMLAttributes<HTMLElement>
+
+const Alert: React.FC<NativeAlertProps> = (props) => {
+  const [show, setShow] = useState<boolean>(true)
+  const [fadeOut, setFadeOut] = useState<boolean>(false)
+  const [font, setFont] = useState<React.ReactNode>()
   const {
     className,
     alertType,
     message,
     description,
     closable,
-    onClose
+    showIcon,
+    onClose,
+    ...restProps // 把剩下的属性取出来
   } = props
 
   useEffect(() => {
     if (!!description) {
       switch (alertType) {
         case AlertType.Success:
-          setFont('&#xe657;')
+          setFont(<i className={fontClass}>&#xe657;</i>)
           break;
         case AlertType.Info:
-          setFont('&#xe6e5;')
+          setFont(<i className={fontClass}>&#xe6e5;</i>)
           break;
         case AlertType.Danger:
-          setFont('&#xe659;')
+          setFont(<i className={fontClass}>&#xe659;</i>)
           break;
         case AlertType.Warning:
-          setFont('&#xe663;')
+          setFont(<i className={fontClass}>&#xe663;</i>)
           break;
       }
     }else {
       switch (alertType) {
         case AlertType.Success:
-          setFont('&#xe656;')
+          setFont(<i className={fontClass}>&#xe656;</i>)
           break;
         case AlertType.Info:
-          setFont('&#xe6e4;')
+          setFont(<i className={fontClass}>&#xe6e4;</i>)
           break;
         case AlertType.Danger:
-          setFont('&#xe658;')
+          setFont(<i className={fontClass}>&#xe658;</i>)
           break;
         case AlertType.Warning:
-          setFont('&#xe662;')
+          setFont(<i className={fontClass}>&#xe662;</i>)
           break;
       }
     }
@@ -78,10 +83,6 @@ const Alert: React.FC<iAlertProps> = (props) => {
     ['font-lg']: !!description
   })
 
-  Alert.defaultProps = {
-    closable: false,
-  }
-
   const closeClick = () => {
     // 设置移除动画
     setFadeOut(true)
@@ -95,14 +96,14 @@ const Alert: React.FC<iAlertProps> = (props) => {
   }
   if (show) {
     return (
-      <div className={classname}>
-        <i className={fontClass}>{font}</i>
+      <div className={classname} {...restProps}>
+        {showIcon && font}
         <div className="alert-content">
           <p className="alert-message">{message}</p>
           <p className="alert-description">{description}</p>
         </div>
         {
-          closable ? <span className='alert-close' onClick={closeClick}>x</span> : <></>
+          closable && <span className='alert-close' onClick={closeClick}>x</span>
         }
       </div>
     )
@@ -110,6 +111,11 @@ const Alert: React.FC<iAlertProps> = (props) => {
     return <></>
   }
 
+}
+
+Alert.defaultProps = {
+  showIcon:true,
+  closable: false,
 }
 
 export default Alert;

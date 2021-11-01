@@ -50,17 +50,17 @@ const Button:React.FC<ButtonProps> = (props) => {
     disabled:(btnType===ButtonType.Link)&&disabled,
   })
 
-  Button.defaultProps = {
-    disabled:false,
-    btnType:ButtonType.Default,
-    children:'Button'
-  }
-
   if(btnType === ButtonType.Link){
     return <a className={classname} href={href} {...restProps}>{children}</a>
   }else {
     return <button className={classname} disabled={disabled} {...restProps}>{children}</button>
   }
+}
+
+Button.defaultProps = {
+  disabled:false,
+  btnType:ButtonType.Default,
+  children:'Button'
 }
 
 export default Button;
