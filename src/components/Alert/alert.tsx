@@ -1,4 +1,4 @@
-import React, { useState, useEffect, DOMAttributes, DOMElement } from "react";
+import React, { useState, useEffect } from "react";
 import classnames from 'classnames'
 
 export enum AlertType {
@@ -75,10 +75,10 @@ const Alert: React.FC<NativeAlertProps> = (props) => {
   })
 
   const fontClass = classnames('iconfont', {
-    success: alertType == AlertType.Success,
-    info: alertType == AlertType.Info,
-    danger: alertType == AlertType.Danger,
-    warning: alertType == AlertType.Warning,
+    success: alertType === AlertType.Success,
+    info: alertType === AlertType.Info,
+    danger: alertType === AlertType.Danger,
+    warning: alertType === AlertType.Warning,
     ['font-sm']: !description,
     ['font-lg']: !!description
   })

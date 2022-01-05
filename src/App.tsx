@@ -1,9 +1,17 @@
 import React from 'react';
 import Button,{ButtonType,ButtonSize} from './components/Button/button'
 import Alert,{AlertType} from './components/Alert/alert'
+import Menu from './components/Menu/menu';
+import MenuItem from './components/Menu/menuItem';
 function App() {
   return (
     <div className="App">
+      <h1>Menu</h1>
+      <Menu onSelect={(index)=>{console.log(index)}}>
+        <MenuItem>1</MenuItem>
+        <MenuItem disable={true}>2</MenuItem>
+        <MenuItem>3</MenuItem>
+      </Menu>
       <h1>Button</h1>
       <Button></Button>
       <Button btnSize={ButtonSize.Large} btnType={ButtonType.Primary} onClick={()=>{alert('hello word')}}>Hello Word</Button>
