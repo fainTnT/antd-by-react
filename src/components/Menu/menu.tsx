@@ -2,25 +2,29 @@ import React, { createContext, useState } from 'react'
 import classNames from 'classnames'
 import {menuItemProps} from './menuItem'
 type MenuMode = 'horizontal' | 'vertical'
-type SelectCallback = (selectedIndex: number) => void;
+type SelectCallback = (selectedIndex: string) => void;
 
 export interface MenuProps {
-  defaultIndex?: number;
+  defaultIndex?: string;
   className?: string;
   mode?: MenuMode;
   style?: React.CSSProperties;
   onSelect?: SelectCallback;
+  defaultOpenMenu?:Array<string>
 }
 
 export interface iMenuContextProps {
-  index?: number;
+  index?: string;
   onSelect?: SelectCallback;
+  mode?: MenuMode
+  defaultOpenMenu?:Array<string>
 }
 
-export const menuContext = createContext<iMenuContextProps>({ index: 0 })
+export const menuContext = createContext<iMenuContextProps>({ index: '0' })
 
 const Menu: React.FC<MenuProps> = (props) => {
   const {
+    defaultOpenMenu,
     defaultIndex,
     className,
     mode,
@@ -30,17 +34,20 @@ const Menu: React.FC<MenuProps> = (props) => {
   } = props
   const [currentActive, setActive] = useState(defaultIndex)
   const classes = classNames('viking-menu', className, {
-    'menu-vertical': mode === 'vertical'
+    'menu-vertical': mode === 'vertical',
+    'menu-horizontal': mode !== 'vertical',
   })
-  const handleSelect = (index: number) => {
+  const handleSelect = (index: string) => {
     setActive(index)
     if (onSelect) {
       onSelect(index)
     }
   }
   const passedContext: iMenuContextProps = {
-    index: currentActive ? currentActive : 0,
-    onSelect: handleSelect
+    index: currentActive ? currentActive : '0',
+    onSelect: handleSelect,
+    mode,
+    defaultOpenMenu
   }
 
   const renderChildren = () => {
@@ -51,7 +58,7 @@ const Menu: React.FC<MenuProps> = (props) => {
       if(displayName === 'MenuItem'||displayName === 'SubMenu'){
         // 给每个MenuItem添加index参数
         return React.cloneElement(childElement,{
-          index
+          index:index.toString()
         })
       }else {
         console.error('警告：Mnue中存在不是MenuItem的标签')
@@ -70,7 +77,7 @@ const Menu: React.FC<MenuProps> = (props) => {
 
 Menu.defaultProps = {
   mode: 'horizontal',
-  defaultIndex: 0
+  defaultIndex: '0'
 }
 
 export default Menu
